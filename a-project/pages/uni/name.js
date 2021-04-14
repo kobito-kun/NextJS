@@ -8,20 +8,39 @@ function name() {
 
   const [input, setInput] = useState("");
   const [results, setResults] = useState([]);
-  const [countries, setCountries] = useState([])
+  const [countries, setCountries] = useState([]);
+  const [clicked, setClicked] = useState(false);
+  const [selectCountry, setSelectCountry] = useState("");
 
   useEffect(() => {
-      axios.get(`http://universities.hipolabs.com/search?name=${input}`).then(res => {
+    setResults(filterArraybyCountry(results, selectCountry));
+  }, [selectCountry])
+  
+  const fetchRequest = () => {
+    setClicked(true)
+    axios.get(`http://universities.hipolabs.com/search?name=${input}`).then(res => {
         setResults(res.data)
-        res.data.forEach(obj => {setCountries([...countries, obj.country])})
+        setCountries(makeUniqueViaArray(res.data))
       })
-      console.log(countries)
-  }, [input])
+  }
 
-  const handleChangedText = (e) => {
-    if(e.target.value.length > 0){
-      setInput(e.target.value)
-    }
+  const filterArraybyCountry = (array, target) => {
+    let output = [];
+    array.forEach(obj => {if (obj.country === target) output.push(obj)})
+    return output
+  }
+
+  const makeUniqueViaArray = (array) => {
+	  let output = [];
+    array.forEach(obj => { if (!output.includes(obj.country)) output.push(obj.country) })
+	  return output;
+  }  
+  const handleChangedSelect = (e) => {
+    setSelectCountry(e.target.value)
+    setCountries([e.target.value])
+  }
+  const handleTextInput = (e) => {
+    setInput(e.target.value)
   }
 
   return (
@@ -35,15 +54,18 @@ function name() {
         <h1 className="font-bold text-2xl">University Lookup</h1>
         <p>Searching by <span className="font-semibold">Name</span></p>
         <div>
-        <input className="border border-black px-4 py-2 rounded shadow" onChange={handleChangedText}></input>
-          <select>
+        <input className="border border-black px-4 py-2 rounded shadow" onChange={handleTextInput}></input>
+        {countries.length > 0 ? "" : <button onClick={fetchRequest} className="py-2 px-4 bg-blue-500 rounded shadow font-bold text-white mx-4">Search</button>}
+        {countries.length > 0 ?
+        <select onChange={handleChangedSelect} className="w-52 rounded shadow border border-black px-4 py-2">
           {countries.map(e => (
-              <option key={uuidv4()}>{e}</option>
+            <option key={uuidv4()}>{e}</option>
             ))}
-          </select>
+        </select>
+        : ""}
       </div>
         <div>
-      {input.length > 0 ? 
+      {results.length > 0 ? 
         <table id={styles.results}>
           <thead>
             <tr>
@@ -61,7 +83,8 @@ function name() {
           </tbody>
         </table>
         :
-        <div>
+        <div className="animate-pulse">
+          {clicked ? "Loading..." : ""}
         </div>  
       }
         </div>
