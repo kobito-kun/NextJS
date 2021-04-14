@@ -49,7 +49,7 @@ function country() {
           <div className="fixed top-0 left-0 p-4 font-bold text-white text-2xl">
             <Link href="/">
               <a>
-                Kobi <i class="fab fa-github"></i>
+                Kobi <i className="fab fa-github"></i>
               </a>
             </Link>
           </div>          
