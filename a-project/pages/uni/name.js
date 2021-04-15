@@ -52,6 +52,7 @@ function name() {
         <title>University Lookup > Name</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/tailwind.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+      	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
       <div className="min-h-screen flex flex-col duration-300 items-center justify-center bg-gradient-to-br from-pink-300 via-pink-500 to-pink-700">
         <div className="bg-white duration-300 rounded-lg shadow p-10 flex flex-col items-center justify-center">
