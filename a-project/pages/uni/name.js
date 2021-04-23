@@ -22,12 +22,11 @@ function name() {
     setClicked(true)
     var output = []
     data.forEach(item => {
-      if(String(item.name) === String(input)){
+      if(item.name.toLowerCase().includes(input.toLowerCase())){
         output.push(item)
       }
     })
     setResults(output)
-    setCountries(makeUniqueViaArray(output))
   }
   const filterArraybyCountry = (array, target) => {
     let output = [];

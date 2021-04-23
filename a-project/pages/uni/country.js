@@ -16,7 +16,7 @@ function country() {
     setClicked(true)
     var output = []
     data.forEach(item => {
-      if(item.country === input){
+      if(item.country.toLowerCase() === input.toLowerCase() || item.country.toLowerCase().includes(input.toLowerCase())){
         output.push(item)
       }
     })
