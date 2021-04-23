@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
-import styles from './table.module.css'
+//import axios from 'axios';
+import styles from './table.module.css';
+import data from "./results.json";
 
 function country() {
 
@@ -13,9 +14,13 @@ function country() {
 
   const fetchRequest = () => {
     setClicked(true)
-    axios.get(`http://universities.hipolabs.com/search?country=${input}`).then(res => {
-        setResults(res.data)
-      })
+    var output = []
+    data.forEach(item => {
+      if(item.country === input){
+        output.push(item)
+      }
+    })
+    setResults(output)
   }
   const handleTextInput = (e) => {
     setInput(e.target.value)
@@ -60,7 +65,7 @@ function country() {
         <input className="border border-black px-4 py-2 rounded shadow" onChange={handleTextInput}></input>
         <button onClick={fetchRequest} className="py-2 px-4 bg-blue-500 rounded shadow font-bold text-white mx-4">Search</button>
       </div>
-        <div>
+        <div id={styles.overflow}>
       {results.length > 0 ? 
         <table id={styles.results}>
           <thead>

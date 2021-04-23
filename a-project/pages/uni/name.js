@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Head from 'next/head';
 import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
+//import axios from 'axios';
 import styles from './table.module.css'
 import Link from 'next/link';
-
+import data from "./results.json";
 
 function name() {
 
@@ -20,10 +20,14 @@ function name() {
   
   const fetchRequest = () => {
     setClicked(true)
-    axios.get(`http://universities.hipolabs.com/search?name=${input}`).then(res => {
-        setResults(res.data)
-        setCountries(makeUniqueViaArray(res.data))
-      })
+    var output = []
+    data.forEach(item => {
+      if(String(item.name) === String(input)){
+        output.push(item)
+      }
+    })
+    setResults(output)
+    setCountries(makeUniqueViaArray(output))
   }
   const filterArraybyCountry = (array, target) => {
     let output = [];
@@ -88,7 +92,7 @@ function name() {
         </select>
         : ""}
       </div>
-        <div>
+        <div id={styles.overflow}>
       {results.length > 0 ? 
         <table id={styles.results}>
           <thead>

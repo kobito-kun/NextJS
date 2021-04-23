@@ -25,3 +25,10 @@
   background-color: #4CAF50;
   color: white;
 }
+
+#overflow{
+  display: block;
+  max-height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
