@@ -27,6 +27,7 @@ function name() {
       }
     })
     setResults(output)
+    setCountries(makeUniqueViaArray(output))    
   }
   const filterArraybyCountry = (array, target) => {
     let output = [];
